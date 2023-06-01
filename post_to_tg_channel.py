@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 from PIL import Image
 
 
+UPLOAD_FILE_MAX_SIZE = 20000000
+IMAGE_HEIGHT = 600
+IMAGE_WIDTH = 800
+
+
 def post_photo_to_tg(image, token, chat):
     bot = Bot(token=token)
     bot.send_photo(chat_id=chat, photo=open(image, 'rb'))
@@ -18,9 +23,9 @@ def get_images_to_upload():
     for address, directory, files in image_path_pars:
         images = files
         for image in images:
-            if os.stat(f'images/{image}').st_size > 20000000:
+            if os.stat(f'images/{image}').st_size > UPLOAD_FILE_MAX_SIZE:
                 image = Image.open(f'images/{image}')
-                image.thumbnail((800, 600))
+                image.thumbnail((IMAGE_WIDTH, IMAGE_HEIGHT))
             photos_to_upload.append(image)
     return photos_to_upload
 
