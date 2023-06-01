@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from save_pictures import save_picture
 
 
-def get_nasa_apod_photo(count, folder):
+def get_nasa_apod_photo(count):
     load_dotenv()
     nasa_api_token = os.getenv("NASA_API_TOKEN")
     get_parameters = {'api_key': nasa_api_token, 'count': count}
@@ -13,19 +13,17 @@ def get_nasa_apod_photo(count, folder):
     response.raise_for_status()
     photos = response.json()
     for count, photo in enumerate(photos):
-        save_picture(photo['url'], folder, f'nasa_APOD_{count}')
+        save_picture(photo['url'], 'images', f'nasa_APOD_{count}')
 
 
 if __name__ == '__main__':
     command_arguments = argparse.ArgumentParser\
         (description='Загрузка картинок NASA APOC (Astronomy Picture of the Day). Скрипт загружает астрономические '
                      'картинки дня с сайта NASA. Необходимо указать обязательный параметр count - количество '
-                     'загружаемых картинок. Так же можно указать папку для сохранения картинок, '
-                     'по умолчанию - images')
+                     'загружаемых картинок.')
     command_arguments.add_argument('count', help='Количество фотографий', type=int)
-    command_arguments.add_argument('-f', '--folder', help='Папка для сохранения', default='images')
     args = command_arguments.parse_args()
     try:
-        get_nasa_apod_photo(args.count, args.folder)
+        get_nasa_apod_photo(args.count)
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при выполнении запроса: {e}")
