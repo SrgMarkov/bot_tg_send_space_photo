@@ -1,6 +1,7 @@
 # created by virtualenv automatically
 venv
 .idea
-__pycashe__
+__pycashe__/
 .env
 images
+.DS_Store
