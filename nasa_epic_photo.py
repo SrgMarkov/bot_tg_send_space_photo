@@ -29,7 +29,4 @@ if __name__ == '__main__':
                      'необязательный параметр count.')
     command_arguments.add_argument('-c', '--count', help='Количество фотографий', type=int, default=1000)
     args = command_arguments.parse_args()
-    try:
-        get_nasa_epic_photo(args.count, nasa_api_token)
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при выполнении запроса: {e}")
+    get_nasa_epic_photo(args.count, nasa_api_token)

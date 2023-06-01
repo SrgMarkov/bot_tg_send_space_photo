@@ -23,7 +23,4 @@ if __name__ == '__main__':
                      'загружаемых картинок.')
     command_arguments.add_argument('count', help='Количество фотографий', type=int)
     args = command_arguments.parse_args()
-    try:
-        get_nasa_apod_photo(args.count, nasa_api_token)
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при выполнении запроса: {e}")
+    get_nasa_apod_photo(args.count, nasa_api_token)

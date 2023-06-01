@@ -18,7 +18,4 @@ if __name__ == '__main__':
                      'Если вернулась ошибка 404 - вероятнее всего фотографии запрашиваемого запуска не делались')
     command_arguments.add_argument('-i', '--id', help='ID Запуска', default='last')
     args = command_arguments.parse_args()
-    try:
-        get_spacex_launch_photo(args.id)
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при выполнении запроса: {e}")
+    get_spacex_launch_photo(args.id)
