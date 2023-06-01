@@ -6,10 +6,8 @@ from dotenv import load_dotenv
 from save_pictures import save_picture
 
 
-def get_nasa_epic_photo(count):
-    load_dotenv()
-    nasa_api_token = os.getenv("NASA_API_TOKEN")
-    get_parameters = {'api_key': nasa_api_token}
+def get_nasa_epic_photo(count, token):
+    get_parameters = {'api_key': token}
     image_info_response = requests.get('https://api.nasa.gov/EPIC/api/natural/images', params=get_parameters).json()
     for number, image_info in enumerate(image_info_response):
         if number == count:
@@ -22,6 +20,8 @@ def get_nasa_epic_photo(count):
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    nasa_api_token = os.getenv("NASA_API_TOKEN")
     command_arguments = argparse.ArgumentParser\
         (description='Загрузка картинок NASA EPIC (Earth Polychromatic Imaging Camera). Скрипт загружает фотографии с '
                      'камеры полихроматического изображения Земли с самой последней датой съемки. По умолчанию '
@@ -30,6 +30,6 @@ if __name__ == '__main__':
     command_arguments.add_argument('-c', '--count', help='Количество фотографий', type=int, default=1000)
     args = command_arguments.parse_args()
     try:
-        get_nasa_epic_photo(args.count)
+        get_nasa_epic_photo(args.count, nasa_api_token)
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при выполнении запроса: {e}")
