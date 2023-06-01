@@ -8,15 +8,15 @@ from save_pictures import save_picture
 
 def get_nasa_epic_photo(count, token):
     get_parameters = {'api_key': token}
-    image_info_response = requests.get('https://api.nasa.gov/EPIC/api/natural/images', params=get_parameters).json()
-    for number, image_info in enumerate(image_info_response):
+    image_parameters = requests.get('https://api.nasa.gov/EPIC/api/natural/images', params=get_parameters).json()
+    for number, parameters in enumerate(image_parameters):
         if number == count:
             break
-        image_name = image_info['image']
-        image_date = datetime.datetime.fromisoformat(image_info['date']).date().strftime("%Y/%m/%d")
-        image = requests.get(f'https://api.nasa.gov/EPIC/archive/natural/{image_date}/png/{image_name}.png',
+        image_name = image_parameters['image']
+        image_date = datetime.datetime.fromisoformat(image_parameters['date']).date().strftime("%Y/%m/%d")
+        image_url = requests.get(f'https://api.nasa.gov/EPIC/archive/natural/{image_date}/png/{image_name}.png',
                              params=get_parameters)
-        save_picture(image.url, 'images', f'nasa_EPIC_{number}')
+        save_picture(image_url.url, 'images', f'nasa_EPIC_{number}')
 
 
 if __name__ == '__main__':
