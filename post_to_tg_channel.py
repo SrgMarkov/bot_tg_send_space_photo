@@ -28,8 +28,8 @@ def get_images_to_upload():
 if __name__ == '__main__':
     load_dotenv()
     telegram_token = os.getenv("TELEGRAM_TOKEN")
-    chat_id = os.getenv("CHAT_ID")
-    upload_time = os.getenv("PUBLICATION_TIME", default=14400)
+    chat_id = os.getenv("TG_CHAT_ID")
+    upload_time = os.getenv("TG_PUBLICATION_PERIOD", default=14400)
     command_arguments = argparse.ArgumentParser \
         (description='Скрипт для выгрузки картинок в группу telegram. Можно выгрузить случайное фото или фото по имени '
                      'файла. Так же можно задать автопубликацию через каждые "PUBLICATION_TIME" секунд (из переменной '

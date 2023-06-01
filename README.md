@@ -23,7 +23,7 @@
 ```
 NASA_API_TOKEN=thisistoKeN4example
 TELEGRAM_TOKEN=6032470479:thisistoKeN4example
-CHAT_ID=@thisisxamplename
+TG_CHAT_ID=@thisisxamplename
 
 ```
 - Установить зависимости командой
