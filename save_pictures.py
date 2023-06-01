@@ -11,7 +11,6 @@ def get_file_extension(url):
 def save_picture(url, pathname, name):
     response = requests.get(url)
     response.raise_for_status()
-    if not os.path.exists(pathname):
-        os.makedirs(pathname)
+    os.makedirs(pathname, exist_ok=True)
     with open(f'{pathname}/{name}{get_file_extension(url)}', 'wb') as file:
         file.write(response.content)
