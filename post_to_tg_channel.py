@@ -16,7 +16,6 @@ def post_photo_to_tg(image, token, chat):
     bot = Bot(token=token)
     with open(image, 'rb') as photo_file:
         bot.send_photo(chat_id=chat, photo=photo_file)
-    photo_file.close()
 
 
 def get_images_to_upload():
