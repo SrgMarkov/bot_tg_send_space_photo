@@ -3,7 +3,7 @@ import requests
 from save_pictures import save_picture
 
 
-def get_spacex_launch_photo(launch_id):
+def get_spacex_launch_photos(launch_id):
     url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(url)
     response.raise_for_status()
@@ -18,4 +18,4 @@ if __name__ == '__main__':
                      'Если вернулась ошибка 404 - вероятнее всего фотографии запрашиваемого запуска не делались')
     command_arguments.add_argument('-i', '--id', help='ID Запуска', default='last')
     args = command_arguments.parse_args()
-    get_spacex_launch_photo(args.id)
+    get_spacex_launch_photos(args.id)
