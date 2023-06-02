@@ -12,8 +12,7 @@ IMAGE_HEIGHT = 600
 IMAGE_WIDTH = 800
 
 
-def post_photo_to_tg(image, token, chat):
-    bot = Bot(token=token)
+def post_photo_to_tg(image, bot, chat):
     with open(image, 'rb') as photo_file:
         bot.send_photo(chat_id=chat, photo=photo_file)
 
@@ -35,6 +34,7 @@ if __name__ == '__main__':
     load_dotenv()
     telegram_token = os.getenv("TELEGRAM_TOKEN")
     chat_id = os.getenv("TG_CHAT_ID")
+    telegram_bot = Bot(token=telegram_token)
     upload_time = os.getenv("TG_PUBLICATION_PERIOD", default=14400)
     photos_to_upload = get_images_to_upload()
     command_arguments = argparse.ArgumentParser \
@@ -44,11 +44,11 @@ if __name__ == '__main__':
     command_arguments.add_argument('-p', '--photo', help='Имя файла')
     args = command_arguments.parse_args()
     if args.photo:
-        post_photo_to_tg(f'images/{args.photo}', telegram_token, chat_id)
+        post_photo_to_tg(f'images/{args.photo}', telegram_bot, chat_id)
     else:
         while True:
             for photo in photos_to_upload:
-                post_photo_to_tg(f'images/{photo}', telegram_token, chat_id)
+                post_photo_to_tg(f'images/{photo}', telegram_bot, chat_id)
                 time.sleep(int(upload_time))
             random.shuffle(photos_to_upload)
 
