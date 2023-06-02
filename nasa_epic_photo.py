@@ -17,6 +17,7 @@ def get_nasa_epic_photos(count, token):
         image_date = datetime.datetime.fromisoformat(parameters['date']).date().strftime("%Y/%m/%d")
         image_url = requests.get(f'https://api.nasa.gov/EPIC/archive/natural/{image_date}/png/{image_name}.png',
                                  params=get_parameters)
+        image_url.raise_for_status()
         save_picture(image_url.url, 'images', f'nasa_EPIC_{number}')
 
 
