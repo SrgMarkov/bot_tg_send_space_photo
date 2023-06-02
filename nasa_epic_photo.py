@@ -6,9 +6,10 @@ from dotenv import load_dotenv
 from save_pictures import save_picture
 
 
-def get_nasa_epic_photo(count, token):
+def get_nasa_epic_photos(count, token):
     get_parameters = {'api_key': token}
     image_parameters = requests.get('https://api.nasa.gov/EPIC/api/natural/images', params=get_parameters).json()
+    image_parameters.raise_for_status()
     for number, parameters in enumerate(image_parameters):
         if number == count:
             break
@@ -29,4 +30,4 @@ if __name__ == '__main__':
                      'необязательный параметр count.')
     command_arguments.add_argument('-c', '--count', help='Количество фотографий', type=int, default=1000)
     args = command_arguments.parse_args()
-    get_nasa_epic_photo(args.count, nasa_api_token)
+    get_nasa_epic_photos(args.count, nasa_api_token)
