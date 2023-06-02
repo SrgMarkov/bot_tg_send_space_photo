@@ -41,14 +41,14 @@ if __name__ == '__main__':
         (description='Скрипт для выгрузки картинок в группу telegram. Можно выгрузить случайное фото или фото по имени '
                      'файла. Так же можно задать автопубликацию через каждые "PUBLICATION_TIME" секунд (из переменной '
                      'окружения), по умолчанию - 14400(4 часа)')
-    command_arguments.add_argument('-p', '--photo', help='Имя файла', default=random.choice(photos_to_upload))
-    command_arguments.add_argument('-su', '--start_upload', help='Запустить выгрузку фотографий', default=False)
+    command_arguments.add_argument('-p', '--photo', help='Имя файла')
     args = command_arguments.parse_args()
-    if args.start_upload:
+    if args.photo:
+        post_photo_to_tg(f'images/{args.photo}', telegram_token, chat_id)
+    else:
         while True:
             for photo in photos_to_upload:
                 post_photo_to_tg(f'images/{photo}', telegram_token, chat_id)
                 time.sleep(int(upload_time))
             random.shuffle(photos_to_upload)
-    else:
-        post_photo_to_tg(f'images/{args.photo}', telegram_token, chat_id)
+
